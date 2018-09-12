@@ -19,4 +19,5 @@ public class PlayerController : MonoBehaviour {
         moveY = Input.GetAxis("Vertical");
         player.position += new Vector3(moveX * moveSpeed * Time.deltaTime, moveY * moveSpeed * Time.deltaTime,0);
 	}
+
 }
