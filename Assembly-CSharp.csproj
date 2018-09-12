@@ -61,10 +61,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\BomberController.cs" />
-    <Compile Include="Assets\Scripts\Enemies\FollowingMeleeEnemy.cs" />
-    <Compile Include="Assets\Scripts\Enemies\FollowingRangedEnemy.cs" />
-    <Compile Include="Assets\Scripts\Enemies\ProjectileController.cs" />
+    <Compile Include="Assets\Scripts\Enemies\Bomber\BomberController.cs" />
+    <Compile Include="Assets\Scripts\Enemies\EnemyManager.cs" />
+    <Compile Include="Assets\Scripts\Enemies\FollowingMelee\MeleeController.cs" />
+    <Compile Include="Assets\Scripts\Enemies\FollowingRanged\ProjectileController.cs" />
+    <Compile Include="Assets\Scripts\Enemies\FollowingRanged\RangedController.cs" />
+    <Compile Include="Assets\Scripts\Enemies\Healer\HealerController.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerController.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerManager.cs" />
     <Reference Include="UnityEditor.StandardEvents">
