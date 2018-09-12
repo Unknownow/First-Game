@@ -61,6 +61,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\BomberController.cs" />
     <Compile Include="Assets\Scripts\Enemies\FollowingMeleeEnemy.cs" />
     <Compile Include="Assets\Scripts\Enemies\FollowingRangedEnemy.cs" />
     <Compile Include="Assets\Scripts\Enemies\ProjectileController.cs" />
