@@ -6,6 +6,9 @@ public class PlayerProjectileController : MonoBehaviour {
 
     public float projectileSpeed = 2f;
     public float damage = 1f;
+    public float knockBackRange = 3f;
+
+    
 	
 	void Update () {
         transform.Translate(Vector2.up * projectileSpeed * Time.deltaTime);
@@ -16,6 +19,10 @@ public class PlayerProjectileController : MonoBehaviour {
         if (collision.CompareTag("Enemy"))
         {
             collision.GetComponent<EnemyManager>().takeDamage(damage);
+            Vector2 temp = collision.transform.position - transform.position;
+            float alpha = Mathf.Atan2(temp.y, temp.x);
+            temp = new Vector2(-temp.x / Mathf.Abs(temp.x) * knockBackRange * Mathf.Cos(alpha) , -temp.y / Mathf.Abs(temp.y) * knockBackRange * Mathf.Sin(alpha));
+            collision.attachedRigidbody.AddForce(temp,ForceMode2D.Impulse);
             Destroy(gameObject);
         }
         if (collision.CompareTag("Border"))

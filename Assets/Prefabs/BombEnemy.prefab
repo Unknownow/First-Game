@@ -214,6 +214,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 3
+  isPushedBack: 0
+  pushedBackDuration: 0.5
 --- !u!212 &212024617221372816
 SpriteRenderer:
   m_ObjectHideFlags: 1

@@ -5,6 +5,8 @@ using UnityEngine;
 public class BomberController : MonoBehaviour
 {
 
+    EnemyManager thisEnemy;
+    float pushedBackCountdown;
 
     public float moveSpeed = 2f;
 
@@ -23,39 +25,56 @@ public class BomberController : MonoBehaviour
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player").transform;
-        
+        thisEnemy = gameObject.GetComponent<EnemyManager>();
+        pushedBackCountdown = thisEnemy.pushedBackDuration;
     }
 
     // Update is called once per frame
     void Update()
     {
-        
-
-        if(!isDetonated)
+        if (!thisEnemy.isPushedBack)
         {
-            Vector2 difference = player.position - transform.position;
-            float rotationDegreeToPlayer = Mathf.Atan2(difference.x, difference.y) * Mathf.Rad2Deg;
-            transform.rotation = Quaternion.Euler(transform.rotation.x, transform.rotation.y, -rotationDegreeToPlayer - transform.rotation.z);
-
-
-            float temp = Vector2.Distance(player.position, transform.position);
-            if (temp > detonateRange)
+            if (!isDetonated)
             {
-                transform.position = Vector2.MoveTowards(transform.position, player.position, moveSpeed * Time.deltaTime);
+                Vector2 difference = player.position - transform.position;
+                float rotationDegreeToPlayer = Mathf.Atan2(difference.x, difference.y) * Mathf.Rad2Deg;
+                transform.rotation = Quaternion.Euler(transform.rotation.x, transform.rotation.y, -rotationDegreeToPlayer - transform.rotation.z);
+
+
+                float temp = Vector2.Distance(player.position, transform.position);
+                if (temp > detonateRange)
+                {
+                    transform.position = Vector2.MoveTowards(transform.position, player.position, moveSpeed * Time.deltaTime);
+                }
+                else if (temp <= detonateRange)
+                {
+                    isDetonated = true;
+                }
             }
-            else if (temp <= detonateRange)
+
+            else
             {
-                isDetonated = true;
+                if (bombTime <= 0)
+                    detonate(damage);
+                else
+                    bombTime -= Time.deltaTime;
             }
         }
-
         else
         {
-            if (bombTime <= 0)
-                detonate(damage);
+            if (pushedBackCountdown > 0)
+            {
+                pushedBackCountdown -= Time.deltaTime;
+            }
             else
-                bombTime -= Time.deltaTime;
+            {
+                gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
+                pushedBackCountdown = thisEnemy.pushedBackDuration;
+                thisEnemy.isPushedBack = false;
+            }
         }
+
+         
     }
 
     void detonate(float damage)

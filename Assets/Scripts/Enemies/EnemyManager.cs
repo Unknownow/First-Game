@@ -6,6 +6,8 @@ public class EnemyManager : MonoBehaviour {
 
     public float maxHealth = 3f;
     float currentHealth;
+    public bool isPushedBack = false;
+    public float pushedBackDuration = .7f;
 
     private void Start()
     {
@@ -14,6 +16,7 @@ public class EnemyManager : MonoBehaviour {
 
     public void takeDamage(float damage)
     {
+        isPushedBack = true;
         currentHealth -= damage;
         if(currentHealth <= 0)
         {

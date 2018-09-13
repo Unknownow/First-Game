@@ -34,7 +34,6 @@ public class PlayerWeapon : MonoBehaviour {
 			{
 				Instantiate (projectile, frontFace.position, transform.rotation);
 				attackCooldown = attackRate;
-
 			} 
 			else 
 			{
