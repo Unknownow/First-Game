@@ -5,7 +5,7 @@ using UnityEngine;
 public class EnemyManager : MonoBehaviour {
 
     public float maxHealth = 3f;
-    public float currentHealth;
+    float currentHealth;
 
     private void Start()
     {

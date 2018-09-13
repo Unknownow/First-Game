@@ -71,5 +71,6 @@ public class HealerController : MonoBehaviour
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, healingRange);
+        
     }
 }

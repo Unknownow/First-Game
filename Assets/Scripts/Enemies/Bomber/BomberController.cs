@@ -16,7 +16,7 @@ public class BomberController : MonoBehaviour
     public float bombTime = 1.5f;
     public bool isDetonated = false;
     public float detonateRange = 2f;
-    public float bombRange = 3f;
+    public float damageRange = 3f;
     public int damage;
 
     // Use this for initialization
@@ -60,7 +60,7 @@ public class BomberController : MonoBehaviour
 
     void detonate(float damage)
     {
-        Collider2D playerHit = Physics2D.OverlapCircle(transform.position, bombRange, whatIsPlayer);
+        Collider2D playerHit = Physics2D.OverlapCircle(transform.position, damageRange, whatIsPlayer);
         playerHit.GetComponent<PlayerManager>().takeDamage(damage);
         Destroy(gameObject);
     }
@@ -68,7 +68,9 @@ public class BomberController : MonoBehaviour
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, bombRange);
+        Gizmos.DrawWireSphere(transform.position, damageRange);
+        Gizmos.color = Color.blue;
+        Gizmos.DrawWireSphere(transform.position, detonateRange);
     }
 
 }

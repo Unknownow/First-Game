@@ -21,8 +21,8 @@ GameObject:
   - component: {fileID: 4320159660551420}
   - component: {fileID: 212024617221372816}
   - component: {fileID: 50482173758041886}
-  - component: {fileID: 114134934951133040}
   - component: {fileID: 60227002873166428}
+  - component: {fileID: 114134934951133040}
   - component: {fileID: 114728875377455196}
   m_Layer: 9
   m_Name: BombEnemy
@@ -38,7 +38,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1725734166610170}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.79, y: -1.3, z: 0}
+  m_LocalPosition: {x: -4.483683, y: -2.5980856, z: 0}
   m_LocalScale: {x: 0.2, y: 0.2, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -199,8 +199,8 @@ MonoBehaviour:
     m_Bits: 256
   bombTime: 1
   isDetonated: 0
-  detonateRange: 3
-  bombRange: 4
+  detonateRange: 2.42
+  damageRange: 3.67
   damage: 5
 --- !u!114 &114728875377455196
 MonoBehaviour:
