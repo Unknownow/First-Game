@@ -5,16 +5,13 @@ using UnityEngine;
 public class EnemyManager : MonoBehaviour {
 
     public float maxHealth = 3f;
-    float currentHealth;
+    public float currentHealth;
 
     private void Start()
     {
         currentHealth = maxHealth;
     }
 
-    private void Update()
-    {
-    }
     public void takeDamage(float damage)
     {
         currentHealth -= damage;
