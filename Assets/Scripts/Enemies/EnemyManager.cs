@@ -26,7 +26,9 @@ public class EnemyManager : MonoBehaviour {
 
     public void healing(float hp)
     {
-        if(currentHealth < maxHealth)
+        if (currentHealth + hp < maxHealth)
             currentHealth += hp;
+        else
+            currentHealth = maxHealth;
     }
 }
