@@ -61,6 +61,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\Bosses\Fire Boss\BossManager.cs" />
+    <Compile Include="Assets\Scripts\Bosses\Fire Boss\FireBossController.cs" />
+    <Compile Include="Assets\Scripts\Bosses\Fire Boss\FireBossProjectileController.cs" />
+    <Compile Include="Assets\Scripts\Bosses\Fire Boss\FlameBombController.cs" />
+    <Compile Include="Assets\Scripts\Bosses\Fire Boss\FlameController.cs" />
     <Compile Include="Assets\Scripts\Enemies\Bomber\BomberController.cs" />
     <Compile Include="Assets\Scripts\Enemies\EnemyManager.cs" />
     <Compile Include="Assets\Scripts\Enemies\FollowingMelee\MeleeController.cs" />

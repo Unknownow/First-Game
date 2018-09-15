@@ -25,8 +25,13 @@ public class PlayerProjectileController : MonoBehaviour {
             collision.attachedRigidbody.AddForce(temp,ForceMode2D.Impulse);
             Destroy(gameObject);
         }
-        if (collision.CompareTag("Border"))
+        else if (collision.CompareTag("Border"))
         {
+            Destroy(gameObject);
+        }
+        else if(collision.CompareTag("Boss"))
+        {
+            collision.GetComponent<BossManager>().takeDamage(damage);
             Destroy(gameObject);
         }
     }
