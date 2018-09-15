@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class HealerController : MonoBehaviour
 {
+    EnemyManager thisEnemy;
+    float pushedBackCountdown;
+
     public float moveSpeed = 2f;
 
     public Transform player;
@@ -26,41 +29,62 @@ public class HealerController : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player").transform;
         healingCircle = GetComponent<CircleCollider2D>();
         timeBtwHealing = startTimeBtwHealing;
+
+        thisEnemy = gameObject.GetComponent<EnemyManager>();
+        pushedBackCountdown = thisEnemy.pushedBackDuration;
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
-        Vector2 difference = player.position - transform.position;
-        float rotationDegreeToPlayer = Mathf.Atan2(difference.x, difference.y) * Mathf.Rad2Deg;
-        transform.rotation = Quaternion.Euler(transform.rotation.x, transform.rotation.y, -rotationDegreeToPlayer - transform.rotation.z);
 
-        float temp = Vector2.Distance(player.position, transform.position);
+        if (!thisEnemy.isPushedBack)
+        {
+            Vector2 difference = player.position - transform.position;
+            float rotationDegreeToPlayer = Mathf.Atan2(difference.x, difference.y) * Mathf.Rad2Deg;
+            transform.rotation = Quaternion.Euler(transform.rotation.x, transform.rotation.y, -rotationDegreeToPlayer - transform.rotation.z);
 
-        if (temp >= minDistance)
-        {
-            transform.position = Vector2.MoveTowards(transform.position, player.position, moveSpeed * Time.deltaTime);
-        }
-        else if (temp > retreatDistance && temp < minDistance)
-        {
-            transform.position = this.transform.position;
-        }
-        else if (temp <= retreatDistance)
-        {
-            transform.position = Vector2.MoveTowards(transform.position, player.position, -moveSpeed * Time.deltaTime);
-        }
+            float temp = Vector2.Distance(player.position, transform.position);
 
-        if (timeBtwHealing <= 0)
-        {
-            Collider2D[] alliesHealed = Physics2D.OverlapCircleAll(transform.position, healingRange, whatIsEnemy);
-            foreach (Collider2D i in alliesHealed)
+            if (temp >= minDistance)
             {
-                i.GetComponent<EnemyManager>().healing(HpHealed);
+                transform.position = Vector2.MoveTowards(transform.position, player.position, moveSpeed * Time.deltaTime);
             }
-            timeBtwHealing = startTimeBtwHealing;
+            else if (temp > retreatDistance && temp < minDistance)
+            {
+                transform.position = this.transform.position;
+            }
+            else if (temp <= retreatDistance)
+            {
+                transform.position = Vector2.MoveTowards(transform.position, player.position, -moveSpeed * Time.deltaTime);
+            }
+
+            if (timeBtwHealing <= 0)
+            {
+                Collider2D[] alliesHealed = Physics2D.OverlapCircleAll(transform.position, healingRange, whatIsEnemy);
+                foreach (Collider2D i in alliesHealed)
+                {
+                    i.GetComponent<EnemyManager>().healing(HpHealed);
+                }
+                timeBtwHealing = startTimeBtwHealing;
+            }
+            else
+                timeBtwHealing -= Time.deltaTime;
         }
+
         else
-            timeBtwHealing -= Time.deltaTime;
+        {
+            if (pushedBackCountdown > 0)
+            {
+                pushedBackCountdown -= Time.deltaTime;
+            }
+            else
+            {
+                gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
+                pushedBackCountdown = thisEnemy.pushedBackDuration;
+                thisEnemy.isPushedBack = false;
+            }
+        }
         
 
     }
@@ -71,5 +95,6 @@ public class HealerController : MonoBehaviour
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, healingRange);
+        
     }
 }

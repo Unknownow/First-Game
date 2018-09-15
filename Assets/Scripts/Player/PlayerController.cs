@@ -18,6 +18,13 @@ public class PlayerController : MonoBehaviour {
         moveX = Input.GetAxis("Horizontal");
         moveY = Input.GetAxis("Vertical");
         player.position += new Vector3(moveX * moveSpeed * Time.deltaTime, moveY * moveSpeed * Time.deltaTime,0);
-	}
+
+
+        Vector3 cursorPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        cursorPosition.z = 0;
+        Vector2 difference = cursorPosition - transform.position;
+        float rotationDegreeToCursor = Mathf.Atan2(difference.x, difference.y) * Mathf.Rad2Deg;
+        transform.rotation = Quaternion.Euler(transform.rotation.x, transform.rotation.y, -rotationDegreeToCursor - transform.rotation.z);
+    }
 
 }
