@@ -23,7 +23,7 @@ GameObject:
   - component: {fileID: 114289677634562678}
   - component: {fileID: 61917994790560902}
   m_Layer: 0
-  m_Name: Boss2Laser
+  m_Name: Laser Boss Laser
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
