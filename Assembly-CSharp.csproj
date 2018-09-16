@@ -61,22 +61,25 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Scripts\Bosses\Fire Boss\BossManager.cs" />
-    <Compile Include="Assets\Scripts\Bosses\Fire Boss\FireBossController.cs" />
-    <Compile Include="Assets\Scripts\Bosses\Fire Boss\FireBossProjectileController.cs" />
-    <Compile Include="Assets\Scripts\Bosses\Fire Boss\FlameBombController.cs" />
-    <Compile Include="Assets\Scripts\Bosses\Fire Boss\FlameController.cs" />
-    <Compile Include="Assets\Scripts\Enemies\Bomber\BomberController.cs" />
-    <Compile Include="Assets\Scripts\Enemies\EnemyManager.cs" />
-    <Compile Include="Assets\Scripts\Enemies\FollowingMelee\MeleeController.cs" />
-    <Compile Include="Assets\Scripts\Enemies\FollowingRanged\ProjectileController.cs" />
-    <Compile Include="Assets\Scripts\Enemies\FollowingRanged\RangedController.cs" />
-    <Compile Include="Assets\Scripts\Enemies\Healer\HealerController.cs" />
-    <Compile Include="Assets\Scripts\Enemies\Witch\WitchController.cs" />
-    <Compile Include="Assets\Scripts\Player\PlayerController.cs" />
-    <Compile Include="Assets\Scripts\Player\PlayerManager.cs" />
-    <Compile Include="Assets\Scripts\Player\PlayerProjectileController.cs" />
-    <Compile Include="Assets\Scripts\Player\PlayerWeapon.cs" />
+    <Compile Include="Assets\Bosses\Fire Boss\Scripts\FireBossController.cs" />
+    <Compile Include="Assets\Bosses\Fire Boss\Scripts\FireBossProjectileController.cs" />
+    <Compile Include="Assets\Bosses\Fire Boss\Scripts\FlameBombController.cs" />
+    <Compile Include="Assets\Bosses\Fire Boss\Scripts\FlameController.cs" />
+    <Compile Include="Assets\Bosses\Laser Boss\Scripts\Boss2Controller.cs" />
+    <Compile Include="Assets\Bosses\Laser Boss\Scripts\Boss2LaserController.cs" />
+    <Compile Include="Assets\Bosses\Laser Boss\Scripts\Boss2ProjectileController.cs" />
+    <Compile Include="Assets\Bosses\Scripts\BossManager.cs" />
+    <Compile Include="Assets\Enemies\Scripts\Bomber\BomberController.cs" />
+    <Compile Include="Assets\Enemies\Scripts\EnemyManager.cs" />
+    <Compile Include="Assets\Enemies\Scripts\FollowingMelee\MeleeController.cs" />
+    <Compile Include="Assets\Enemies\Scripts\FollowingRanged\ProjectileController.cs" />
+    <Compile Include="Assets\Enemies\Scripts\FollowingRanged\RangedController.cs" />
+    <Compile Include="Assets\Enemies\Scripts\Healer\HealerController.cs" />
+    <Compile Include="Assets\Enemies\Scripts\Witch\WitchController.cs" />
+    <Compile Include="Assets\Player\Scripts\PlayerController.cs" />
+    <Compile Include="Assets\Player\Scripts\PlayerManager.cs" />
+    <Compile Include="Assets\Player\Scripts\PlayerProjectileController.cs" />
+    <Compile Include="Assets\Player\Scripts\PlayerWeapon.cs" />
     <Reference Include="UnityEditor.StandardEvents">
       <HintPath>E:/Game Project 1/First Game/Library/ScriptAssemblies/UnityEditor.StandardEvents.dll</HintPath>
     </Reference>
