@@ -15,12 +15,19 @@ public class PlayerController : MonoBehaviour {
     float teleCooldownTimer;
     public Vector3 target;
 
+    [Space]
+    [Header("Slow")]
+    float duration;
+    float percentage;
+    bool isSlow = false;
+
 
 	// Use this for initialization
 	void Awake () {
         player = GetComponent<Transform>();
         teleCooldownTimer = teleCooldown;
         isTele = false;
+        isSlow = false;
 	}
 	
 	// Update is called once per frame
@@ -50,12 +57,32 @@ public class PlayerController : MonoBehaviour {
                 isTele = false;
             }
         }
+
+
+        if(isSlow && duration > 0)
+        {
+            duration -= Time.deltaTime;
+        }
+        else if(isSlow && duration <= 0)
+        {
+            isSlow = false;
+            moveSpeed = moveSpeed / percentage;
+        }
     }
 
 
     void tele()
     {
         transform.position = target;
+    }
+
+    public void slow(float slowPercentage, float slowDuration)
+    {
+        if (!isSlow)
+            moveSpeed = moveSpeed * slowPercentage;
+        isSlow = true;
+        duration = slowDuration;
+        percentage = slowPercentage;
     }
 
 }

@@ -35,7 +35,7 @@ public class FireBossController : MonoBehaviour {
     [Space]
     [Header("Shotgun Config")]
     public float fireRate;
-    public float fireRateCooldown;
+    float fireRateCooldown;
     public GameObject shotgunProjectile;
     public float spreadRate;
     
@@ -65,6 +65,7 @@ public class FireBossController : MonoBehaviour {
         player = GameObject.FindGameObjectWithTag("Player").transform;
         bossManager = gameObject.GetComponent<BossManager>();
         isDashing = false;
+        isMoving = false;
         dashRateIncrease = dashRate;
         movingCooldown = movingRate;
         bossWeapon = transform.GetChild(0).transform;
