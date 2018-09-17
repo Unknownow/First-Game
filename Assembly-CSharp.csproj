@@ -65,6 +65,9 @@
     <Compile Include="Assets\Bosses\Fire Boss\Scripts\FireBossProjectileController.cs" />
     <Compile Include="Assets\Bosses\Fire Boss\Scripts\FlameBombController.cs" />
     <Compile Include="Assets\Bosses\Fire Boss\Scripts\FlameController.cs" />
+    <Compile Include="Assets\Bosses\Ice Boss\Scripts\IceBossController.cs" />
+    <Compile Include="Assets\Bosses\Ice Boss\Scripts\IcePillarController.cs" />
+    <Compile Include="Assets\Bosses\Ice Boss\Scripts\IceProjectileController.cs" />
     <Compile Include="Assets\Bosses\Laser Boss\Scripts\Boss2Controller.cs" />
     <Compile Include="Assets\Bosses\Laser Boss\Scripts\Boss2LaserController.cs" />
     <Compile Include="Assets\Bosses\Laser Boss\Scripts\Boss2ProjectileController.cs" />
@@ -81,16 +84,16 @@
     <Compile Include="Assets\Player\Scripts\PlayerProjectileController.cs" />
     <Compile Include="Assets\Player\Scripts\PlayerWeapon.cs" />
     <Reference Include="UnityEditor.StandardEvents">
-      <HintPath>E:/Game Project 1/First Game/Library/ScriptAssemblies/UnityEditor.StandardEvents.dll</HintPath>
+      <HintPath>E:/Game Project/First Game/Library/ScriptAssemblies/UnityEditor.StandardEvents.dll</HintPath>
     </Reference>
     <Reference Include="Unity.TextMeshPro.Editor">
-      <HintPath>E:/Game Project 1/First Game/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
+      <HintPath>E:/Game Project/First Game/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.PackageManagerUI.Editor">
-      <HintPath>E:/Game Project 1/First Game/Library/ScriptAssemblies/Unity.PackageManagerUI.Editor.dll</HintPath>
+      <HintPath>E:/Game Project/First Game/Library/ScriptAssemblies/Unity.PackageManagerUI.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.TextMeshPro">
-      <HintPath>E:/Game Project 1/First Game/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
+      <HintPath>E:/Game Project/First Game/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.AIModule">
       <HintPath>C:/Program Files/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.AIModule.dll</HintPath>

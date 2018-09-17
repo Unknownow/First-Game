@@ -13,7 +13,6 @@ public class PlayerWeapon : MonoBehaviour {
 
 	public LayerMask whatIsEnemy;
 
-	public Transform frontFace;
 
 	public GameObject projectile;
 
@@ -22,7 +21,6 @@ public class PlayerWeapon : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		frontFace = transform.GetChild(0).transform;
 		attackCooldown = attackRate;
 	}
 
@@ -32,7 +30,7 @@ public class PlayerWeapon : MonoBehaviour {
 		{
 			if (range) 
 			{
-				Instantiate (projectile, frontFace.position, transform.rotation);
+				Instantiate (projectile, transform.position, transform.rotation);
 				attackCooldown = attackRate;
 			} 
 			else 
