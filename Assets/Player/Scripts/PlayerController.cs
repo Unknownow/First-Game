@@ -11,7 +11,7 @@ public class PlayerController : MonoBehaviour {
     [Space]
     [Header("Teleportation")]
     public float teleCooldown = 2f;
-    public bool isTele = false;
+    public bool canTele = true;
     float teleCooldownTimer;
     public Vector3 target;
 
@@ -26,7 +26,7 @@ public class PlayerController : MonoBehaviour {
 	void Awake () {
         player = GetComponent<Transform>();
         teleCooldownTimer = teleCooldown;
-        isTele = false;
+        canTele = true;
         isSlow = false;
 	}
 	
@@ -43,18 +43,14 @@ public class PlayerController : MonoBehaviour {
         float rotationDegreeToCursor = Mathf.Atan2(difference.x, difference.y) * Mathf.Rad2Deg;
         transform.rotation = Quaternion.Euler(transform.rotation.x, transform.rotation.y, -rotationDegreeToCursor - transform.rotation.z);
         
-        if(isTele)
+        if(!canTele)
         {
-            if(teleCooldownTimer == 0)
-            {
-                tele();
-            }
             if (teleCooldownTimer < teleCooldown)
                 teleCooldownTimer += Time.deltaTime;
             else
             {
-                teleCooldownTimer = teleCooldown;
-                isTele = false;
+                teleCooldownTimer = 0;
+                canTele = true;
             }
         }
 
@@ -71,9 +67,14 @@ public class PlayerController : MonoBehaviour {
     }
 
 
-    void tele()
+    public void tele(Vector3 target)
     {
-        transform.position = target;
+        if(canTele)
+        {
+            canTele = false;
+            transform.position = target;
+        }
+        
     }
 
     public void slow(float slowPercentage, float slowDuration)
