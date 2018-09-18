@@ -159,7 +159,7 @@ MonoBehaviour:
   standStillTime: 5
   summonRate: 0.5
   icePillar: {fileID: 1365276842609726, guid: 0a3e0eccf9d5ea34997c594775f5d011, type: 2}
-  turretFireRate: 0.13
+  turretFireRate: 0.12
   spreadRate: 0
 --- !u!212 &212890699006384432
 SpriteRenderer:
