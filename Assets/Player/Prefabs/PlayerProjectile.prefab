@@ -142,7 +142,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   projectileSpeed: 6
   damage: 1
-  knockBackRange: 10
+  knockBackRange: 20
 --- !u!212 &212012821508316372
 SpriteRenderer:
   m_ObjectHideFlags: 1

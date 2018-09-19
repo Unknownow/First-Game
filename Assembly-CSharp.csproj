@@ -72,18 +72,19 @@
     <Compile Include="Assets\Bosses\Laser Boss\Scripts\Boss2LaserController.cs" />
     <Compile Include="Assets\Bosses\Laser Boss\Scripts\Boss2ProjectileController.cs" />
     <Compile Include="Assets\Bosses\Scripts\BossManager.cs" />
-    <Compile Include="Assets\Enemies\Scripts\Bomber\BomberController.cs" />
+    <Compile Include="Assets\Enemies\Bomber\Scripts\BomberController.cs" />
+    <Compile Include="Assets\Enemies\FlameThrower\Scripts\MeleeController.cs" />
+    <Compile Include="Assets\Enemies\Gunner\Scripts\ProjectileController.cs" />
+    <Compile Include="Assets\Enemies\Gunner\Scripts\RangedController.cs" />
+    <Compile Include="Assets\Enemies\Healer\Scripts\HealerController.cs" />
     <Compile Include="Assets\Enemies\Scripts\EnemyManager.cs" />
-    <Compile Include="Assets\Enemies\Scripts\FollowingMelee\MeleeController.cs" />
-    <Compile Include="Assets\Enemies\Scripts\FollowingRanged\ProjectileController.cs" />
-    <Compile Include="Assets\Enemies\Scripts\FollowingRanged\RangedController.cs" />
-    <Compile Include="Assets\Enemies\Scripts\Healer\HealerController.cs" />
-    <Compile Include="Assets\Enemies\Scripts\Witch\WitchController.cs" />
+    <Compile Include="Assets\Enemies\Witch\Scripts\WitchController.cs" />
     <Compile Include="Assets\Map\Scripts\MapPiece.cs" />
     <Compile Include="Assets\Player\Scripts\PlayerController.cs" />
     <Compile Include="Assets\Player\Scripts\PlayerManager.cs" />
     <Compile Include="Assets\Player\Scripts\PlayerProjectileController.cs" />
     <Compile Include="Assets\Player\Scripts\PlayerWeapon.cs" />
+    <Compile Include="Assets\SimpleParticlePack\Scripts\ParticleTester.cs" />
     <Reference Include="UnityEditor.StandardEvents">
       <HintPath>E:/Game Project/First Game/Library/ScriptAssemblies/UnityEditor.StandardEvents.dll</HintPath>
     </Reference>
