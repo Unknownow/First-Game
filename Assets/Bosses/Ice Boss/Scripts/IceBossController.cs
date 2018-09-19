@@ -62,7 +62,7 @@ public class IceBossController : MonoBehaviour {
         bossWeapon = transform.GetChild(0).transform;
         teleportCooldown = teleportRate;
         fireRateCooldown = fireRate;
-
+        mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
 
         standStillCooldown = standStillTime;
         summonCooldown = summonRate;

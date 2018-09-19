@@ -9,6 +9,11 @@ TagManager:
   - Projectile
   - Boss
   - Map Divider
+  - Upper Left
+  - Upper Right
+  - Lower Left
+  - Lower Right
+  - Map Piece
   layers:
   - Default
   - TransparentFX
@@ -45,4 +50,10 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Background
+    uniqueID: 4195714475
+    locked: 0
+  - name: Player
+    uniqueID: 1841202357
     locked: 0
