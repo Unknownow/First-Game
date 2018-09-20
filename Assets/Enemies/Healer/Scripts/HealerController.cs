@@ -26,6 +26,10 @@ public class HealerController : MonoBehaviour
     bool isStun = false;
     bool isSlow = false;
 
+    Animator healerAnimator;
+
+    public Transform[] healingAnim;
+
     // Use this for initialization
     void Start()
     {
@@ -38,6 +42,7 @@ public class HealerController : MonoBehaviour
 
         isStun = false;
         isSlow = false;
+        healerAnimator = GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -88,13 +93,16 @@ public class HealerController : MonoBehaviour
             if (temp >= minDistance)
             {
                 transform.position = Vector2.MoveTowards(transform.position, player.position, moveSpeed * Time.deltaTime);
+                healerAnimator.SetBool("isRunning", true);
             }
             else if (temp > retreatDistance && temp < minDistance)
             {
+                healerAnimator.SetBool("isRunning", false);
                 transform.position = this.transform.position;
             }
             else if (temp <= retreatDistance)
             {
+                healerAnimator.SetBool("isRunning", true);
                 transform.position = Vector2.MoveTowards(transform.position, player.position, -moveSpeed * Time.deltaTime);
             }
 
@@ -105,10 +113,13 @@ public class HealerController : MonoBehaviour
                 {
                     i.GetComponent<EnemyManager>().healing(HpHealed);
                 }
+                healingAnimation();
                 timeBtwHealing = startTimeBtwHealing;
             }
             else
                 timeBtwHealing -= Time.deltaTime;
+
+            
         }
 
         else
@@ -128,6 +139,23 @@ public class HealerController : MonoBehaviour
 
     }
 
+    void healingAnimation()
+    {
+        int i = Random.Range(0, 4);
+        healingClone(healingAnim[i]);
+        return;
+    }
+
+    void healingClone(Transform healingAnim)
+    {
+        GameObject clone;
+        clone = Instantiate(healingAnim.gameObject, transform.position, transform.rotation);
+        clone.transform.parent = transform;
+        
+        clone.transform.localScale = new Vector3(7, 7, 7);
+        Destroy(clone, .6f);
+        return;
+    }
 
 
     private void OnDrawGizmosSelected()
