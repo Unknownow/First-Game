@@ -4,20 +4,28 @@ using UnityEngine;
 
 public class MeleeController : MonoBehaviour {
 
+    [Space]
+    [Header("Others")]
     EnemyManager thisEnemy;
     float pushedBackCountdown;
+    Animator flameThrowerAnimator;
 
+    [Space]
+    [Header("Movement")]
     public float moveSpeed = 2f;
     public float minDistance = 3f;
 
+    [Space]
+    [Header("Attacking")]
+    public Transform gunPoint;
     public Transform weapon;
     public Transform player;
     public LayerMask whatIsPlayer;
     public float attackRange;
     public int damage;
-
     float timeBetweenAttack;
     public float startTimeBetweenAttack = 1f;
+    public Transform[] flame;
 
     // Use this for initialization
     void Start () {
@@ -25,6 +33,8 @@ public class MeleeController : MonoBehaviour {
         weapon = transform.GetChild(0).transform;
         thisEnemy = gameObject.GetComponent<EnemyManager>();
         pushedBackCountdown = thisEnemy.pushedBackDuration;
+        flameThrowerAnimator = GetComponent<Animator>();
+        gunPoint = transform.GetChild(1).transform;
     }
 
     // Update is called once per frame
@@ -42,16 +52,19 @@ public class MeleeController : MonoBehaviour {
 
             if (temp > minDistance)
             {
+                flameThrowerAnimator.SetBool("isRunning", true);
                 transform.position = Vector2.MoveTowards(transform.position, player.position, moveSpeed * Time.deltaTime);
             }
             else if (temp <= minDistance)
             {
+                flameThrowerAnimator.SetBool("isRunning", false);
                 transform.position = this.transform.position;
             }
 
             if (timeBetweenAttack < 0 && temp <= minDistance)
             {
-                Collider2D[] playerHit = Physics2D.OverlapCircleAll(weapon.position, attackRange, whatIsPlayer);
+                flameGun();
+                Collider2D[] playerHit = Physics2D.OverlapCircleAll(gunPoint.position, attackRange, whatIsPlayer);
                 foreach (Collider2D i in playerHit)
                 {
                     i.GetComponent<PlayerManager>().takeDamage(damage);
@@ -80,9 +93,27 @@ public class MeleeController : MonoBehaviour {
     }
 
 
+    void flameGun()
+    {
+        int i = Random.Range(0, 3);
+        flameClone(flame[i]);
+        return;
+    }
+
+    void flameClone(Transform fuzzle)
+    {
+        GameObject clone;
+        clone = Instantiate(fuzzle.gameObject, gunPoint.position, transform.rotation);
+        clone.transform.parent = transform;
+        float size = Random.Range(0.8f, 1f);
+        clone.transform.localScale = new Vector3(size, size, size);
+        Destroy(clone, .06f);
+        return;
+    }
+
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(weapon.position, attackRange);
+        Gizmos.DrawWireSphere(gunPoint.position, attackRange);
     }
 }
