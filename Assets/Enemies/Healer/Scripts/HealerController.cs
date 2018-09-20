@@ -23,15 +23,8 @@ public class HealerController : MonoBehaviour
     public float timeBtwHealing;
     public float startTimeBtwHealing = 1;
 
-    [Space]
-    [Header("Slow")]
-    float slowDuration;
-    float slowPercentage;
-
-    [Space]
-    [Header("Stun")]
-    float stunDuration;
-    float stunPercentage;
+    bool isStun = false;
+    bool isSlow = false;
 
     // Use this for initialization
     void Start()
@@ -42,34 +35,49 @@ public class HealerController : MonoBehaviour
 
         thisEnemy = gameObject.GetComponent<EnemyManager>();
         pushedBackCountdown = thisEnemy.pushedBackDuration;
+
+        isStun = false;
+        isSlow = false;
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
 
-        if (thisEnemy.isStun && stunDuration > 0)
+        if (!isStun && thisEnemy.isStun)
         {
-            stunDuration -= Time.deltaTime;
+            isStun = true;
+        }
+        if (isStun && thisEnemy.stunDuration > 0)
+        {
+            thisEnemy.stunDuration -= Time.deltaTime;
             return;
         }
-        else if (thisEnemy.isStun && stunDuration <= 0)
+        else if (isStun && thisEnemy.stunDuration <= 0)
         {
+            isStun = false;
             thisEnemy.isStun = false;
+        }
+
+        if (!isSlow && thisEnemy.isSlow)
+        {
+            isSlow = true;
+            moveSpeed *= (1 - thisEnemy.slowPercentage);
+        }
+        if (isSlow && thisEnemy.slowDuration > 0)
+        {
+            thisEnemy.slowDuration -= Time.deltaTime;
+        }
+        else if (isSlow && thisEnemy.slowDuration <= 0)
+        {
+            isSlow = false;
+            thisEnemy.isSlow = false;
+            moveSpeed /= (1 - thisEnemy.slowPercentage);
         }
 
         if (!thisEnemy.isPushedBack)
         {
-            if (thisEnemy.isSlow && slowDuration > 0)
-            {
-                slowDuration -= Time.deltaTime;
-                return;
-            }
-            else if (thisEnemy.isSlow && slowDuration <= 0)
-            {
-                thisEnemy.isSlow = false;
-                moveSpeed /= slowPercentage;
-            }
+            
 
             Vector2 difference = player.position - transform.position;
             float rotationDegreeToPlayer = Mathf.Atan2(difference.x, difference.y) * Mathf.Rad2Deg;
@@ -126,25 +134,6 @@ public class HealerController : MonoBehaviour
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, healingRange);
-        
-    }
 
-    public void slow(float slowPercentage, float slowDuration)
-    {
-        if (!thisEnemy.isSlow)
-        {
-            moveSpeed *= slowPercentage;
-        }
-        thisEnemy.isSlow = true;
-        this.slowDuration = slowDuration;
-        this.slowPercentage = slowPercentage;
     }
-
-    public void stun(float stunPercentage, float stunDuration)
-    {
-        thisEnemy.isStun = true;
-        this.stunDuration = stunDuration;
-        this.stunPercentage = stunPercentage;
-    }
-
 }

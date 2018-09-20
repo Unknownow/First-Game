@@ -117,15 +117,4 @@ public class WitchController : MonoBehaviour
         Gizmos.color = Color.blue;
         Gizmos.DrawWireSphere(transform.position, dangerRange);
     }
-
-    public void slow(float slowPercentage, float slowDuration)
-    {
-
-    }
-
-    public void stun(float stunPercentage, float stunDuration)
-    {
-
-    }
-
 }
