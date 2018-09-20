@@ -23,6 +23,16 @@ public class HealerController : MonoBehaviour
     public float timeBtwHealing;
     public float startTimeBtwHealing = 1;
 
+    [Space]
+    [Header("Slow")]
+    float slowDuration;
+    float slowPercentage;
+
+    [Space]
+    [Header("Stun")]
+    float stunDuration;
+    float stunPercentage;
+
     // Use this for initialization
     void Start()
     {
@@ -38,8 +48,29 @@ public class HealerController : MonoBehaviour
     void FixedUpdate()
     {
 
+        if (thisEnemy.isStun && stunDuration > 0)
+        {
+            stunDuration -= Time.deltaTime;
+            return;
+        }
+        else if (thisEnemy.isStun && stunDuration <= 0)
+        {
+            thisEnemy.isStun = false;
+        }
+
         if (!thisEnemy.isPushedBack)
         {
+            if (thisEnemy.isSlow && slowDuration > 0)
+            {
+                slowDuration -= Time.deltaTime;
+                return;
+            }
+            else if (thisEnemy.isSlow && slowDuration <= 0)
+            {
+                thisEnemy.isSlow = false;
+                moveSpeed /= slowPercentage;
+            }
+
             Vector2 difference = player.position - transform.position;
             float rotationDegreeToPlayer = Mathf.Atan2(difference.x, difference.y) * Mathf.Rad2Deg;
             transform.rotation = Quaternion.Euler(transform.rotation.x, transform.rotation.y, -rotationDegreeToPlayer - transform.rotation.z);
@@ -97,4 +128,23 @@ public class HealerController : MonoBehaviour
         Gizmos.DrawWireSphere(transform.position, healingRange);
         
     }
+
+    public void slow(float slowPercentage, float slowDuration)
+    {
+        if (!thisEnemy.isSlow)
+        {
+            moveSpeed *= slowPercentage;
+        }
+        thisEnemy.isSlow = true;
+        this.slowDuration = slowDuration;
+        this.slowPercentage = slowPercentage;
+    }
+
+    public void stun(float stunPercentage, float stunDuration)
+    {
+        thisEnemy.isStun = true;
+        this.stunDuration = stunDuration;
+        this.stunPercentage = stunPercentage;
+    }
+
 }

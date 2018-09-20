@@ -6,8 +6,17 @@ public class EnemyManager : MonoBehaviour {
 
     public float maxHealth = 3f;
     float currentHealth;
+
+    [Space]
+    [Header("Push Back")]
     public bool isPushedBack = false;
     public float pushedBackDuration = .7f;
+
+
+    [HideInInspector]
+    public bool isSlow = false;
+    public bool isStun = false;
+    
 
     private void Start()
     {

@@ -27,6 +27,15 @@ public class MeleeController : MonoBehaviour {
     public float startTimeBetweenAttack = 1f;
     public Transform[] flame;
 
+
+    //slow
+    float slowDuration;
+    float slowPercentage;
+
+
+    float stunDuration;
+    float stunPercentage;
+
     // Use this for initialization
     void Start () {
         player = GameObject.FindGameObjectWithTag("Player").transform;
@@ -40,9 +49,31 @@ public class MeleeController : MonoBehaviour {
     // Update is called once per frame
     void FixedUpdate()
     {
+        if (thisEnemy.isStun && stunDuration > 0)
+        {
+            stunDuration -= Time.deltaTime;
+            return;
+        }
+        else if (thisEnemy.isStun && stunDuration <= 0)
+        {
+            thisEnemy.isStun = false;
+        }
+
 
         if (!thisEnemy.isPushedBack)
         {
+            if (thisEnemy.isSlow && slowDuration > 0)
+            {
+                slowDuration -= Time.deltaTime;
+                return;
+            }
+            else if (thisEnemy.isSlow && slowDuration <= 0)
+            {
+                thisEnemy.isSlow = false;
+                moveSpeed /= slowPercentage;
+            }
+
+
             Vector2 difference = player.position - transform.position;
             float rotationDegreeToPlayer = Mathf.Atan2(difference.x, difference.y) * Mathf.Rad2Deg;
             transform.rotation = Quaternion.Euler(transform.rotation.x, transform.rotation.y, -rotationDegreeToPlayer - transform.rotation.z);
@@ -115,5 +146,23 @@ public class MeleeController : MonoBehaviour {
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(gunPoint.position, attackRange);
+    }
+
+    public void slow(float slowPercentage, float slowDuration)
+    {
+        if (!thisEnemy.isSlow)
+        {
+            moveSpeed *= slowPercentage;
+        }
+        thisEnemy.isSlow = true;
+        this.slowDuration = slowDuration;
+        this.slowPercentage = slowPercentage;
+    }
+
+    public void stun(float stunPercentage, float stunDuration)
+    {
+        thisEnemy.isStun = true;
+        this.stunDuration = stunDuration;
+        this.stunPercentage = stunPercentage;
     }
 }
