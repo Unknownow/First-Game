@@ -8,7 +8,7 @@ public class PlayerController : MonoBehaviour {
     float moveX = 0, moveY = 0;
     public float moveSpeed = 2f;
     public int currentWeaponNumber = 0;
-    public GameObject currentMapPiece;
+    public int currentMapQuarter;
 
     [Space]
     [Header("Teleportation")]
@@ -19,19 +19,19 @@ public class PlayerController : MonoBehaviour {
 
     [Space]
     [Header("Slow")]
-    float duration;
-    float percentage;
-    bool isSlow = false;
+    public float duration;
+    public float percentage;
+    public bool isSlow = false;
 
 
 	// Use this for initialization
 	void Awake () {
         player = GetComponent<Transform>();
         teleCooldownTimer = teleCooldown;
-        canTele = true;
+        canTele = false;
         isSlow = false;
 	}
-	
+
 	// Update is called once per frame
 	void FixedUpdate () {
         moveX = Input.GetAxis("Horizontal");
@@ -88,17 +88,16 @@ public class PlayerController : MonoBehaviour {
         percentage = slowPercentage;
     }
 
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if(collision.CompareTag("Map Piece"))
-        {
-            transform.GetChild(currentWeaponNumber).gameObject.SetActive(false);
-            currentMapPiece.GetComponent<MapPiece>().isPlayerStanding = false;
-            transform.GetChild(collision.GetComponent<MapPiece>().weaponNumber).gameObject.SetActive(true);
-            collision.GetComponent<MapPiece>().isPlayerStanding = true;
-            currentMapPiece = collision.gameObject;
-            currentWeaponNumber = collision.GetComponent<MapPiece>().weaponNumber;
-        }
-    }
+	/*private void OnTriggerEnter2D(Collider2D collision)
+	{
+		if(collision.CompareTag("Map Piece"))
+		{
+			transform.GetChild(currentWeaponNumber).gameObject.SetActive(false);
+			currentMapPiece.GetComponent<MapPiece>().isPlayerStanding = false;
+			transform.GetChild(collision.GetComponent<MapPiece>().weaponNumber).gameObject.SetActive(true);
+			collision.GetComponent<MapPiece>().isPlayerStanding = true;
+			currentMapPiece = collision.gameObject;
+			currentWeaponNumber = collision.GetComponent<MapPiece>().weaponNumber;
+		}
+	}*/
 }

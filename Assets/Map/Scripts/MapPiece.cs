@@ -7,6 +7,7 @@ public class MapPiece : MonoBehaviour {
     [Header("Others")]
     public int weaponNumber = 1;
     public bool isPlayerStanding = false;
+	public int mapQuarter;
 
     [Space]
     [Header("Map Health")]
@@ -26,34 +27,26 @@ public class MapPiece : MonoBehaviour {
 
     private void FixedUpdate()
     {
-        if(isPlayerStanding)
-        {
-            if(healthCountdown < 0)
-            {
-                currentHealth -= healthPerSecond;
-                healthCountdown = healthRate;
-            }
-            else
-            {
-                healthCountdown -= Time.deltaTime;
-            }
-            if (currentHealth <= 0)
-                Destroy(gameObject);
-        }
-        else
-        {
-            if (healthCountdown < 0)
-            {
-                if(currentHealth + healthPerSecond <= maxHealth)
-                {
-                    currentHealth += healthPerSecond;
-                    healthCountdown = healthRate;
-                }       
-            }
-            else
-            {
-                healthCountdown -= Time.deltaTime;
-            }
-        }
+		int d;
+		if (isPlayerStanding)
+			d = -1;
+		else 
+			d =1;
+		if(healthCountdown < 0)
+		{
+			currentHealth += healthPerSecond * d;
+			if (currentHealth > maxHealth)
+				currentHealth = maxHealth;
+			healthCountdown = healthRate;
+		}
+		else
+		{
+			healthCountdown -= Time.deltaTime;
+		}
+		if (currentHealth <= 0) 
+		{
+			transform.root.gameObject.GetComponent<MapDivider> ().MapDestroy (mapQuarter);
+			Destroy (gameObject);
+		}
     }
 }
