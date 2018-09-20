@@ -118,5 +118,14 @@ public class WitchController : MonoBehaviour
         Gizmos.DrawWireSphere(transform.position, dangerRange);
     }
 
-   
+    public void slow(float slowPercentage, float slowDuration)
+    {
+
+    }
+
+    public void stun(float stunPercentage, float stunDuration)
+    {
+
+    }
+
 }

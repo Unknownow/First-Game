@@ -21,6 +21,17 @@ public class BomberController : MonoBehaviour
     public float damageRange = 3f;
     public int damage;
 
+
+    [Space]
+    [Header("Slow")]
+    float slowDuration;
+    float slowPercentage;
+
+    [Space]
+    [Header("Stun")]
+    float stunDuration;
+    float stunPercentage;
+
     // Use this for initialization
     void Start()
     {
@@ -36,6 +47,17 @@ public class BomberController : MonoBehaviour
         {
             if (!isDetonated)
             {
+                if (thisEnemy.isSlow && slowDuration > 0)
+                {
+                    slowDuration -= Time.deltaTime;
+                    return;
+                }
+                else if (thisEnemy.isSlow && slowDuration <= 0)
+                {
+                    thisEnemy.isSlow = false;
+                    moveSpeed /= slowPercentage;
+                }
+
                 Vector2 difference = player.position - transform.position;
                 float rotationDegreeToPlayer = Mathf.Atan2(difference.x, difference.y) * Mathf.Rad2Deg;
                 transform.rotation = Quaternion.Euler(transform.rotation.x, transform.rotation.y, -rotationDegreeToPlayer - transform.rotation.z);
@@ -91,5 +113,21 @@ public class BomberController : MonoBehaviour
         Gizmos.color = Color.blue;
         Gizmos.DrawWireSphere(transform.position, detonateRange);
     }
+
+    public void slow(float slowPercentage, float slowDuration)
+    {
+        if (!thisEnemy.isSlow)
+        {
+            moveSpeed *= slowPercentage;
+        }
+        thisEnemy.isSlow = true;
+        this.slowDuration = slowDuration;
+        this.slowPercentage = slowPercentage;
+    }
+
+    public void stun(float stunPercentage, float stunDuration)
+    {
+    }
+
 
 }
