@@ -29,12 +29,8 @@ public class MeleeController : MonoBehaviour {
 
 
     //slow
-    float slowDuration;
-    float slowPercentage;
-
-
-    float stunDuration;
-    float stunPercentage;
+    bool isSlow = false;
+    bool isStun = false;
 
     // Use this for initialization
     void Start () {
@@ -44,36 +40,51 @@ public class MeleeController : MonoBehaviour {
         pushedBackCountdown = thisEnemy.pushedBackDuration;
         flameThrowerAnimator = GetComponent<Animator>();
         gunPoint = transform.GetChild(1).transform;
+        isStun = false;
+        isSlow = false;
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
-        if (thisEnemy.isStun && stunDuration > 0)
+
+        if(!isStun && thisEnemy.isStun)
         {
-            stunDuration -= Time.deltaTime;
+            isStun = true;
+        }
+        if (isStun && thisEnemy.stunDuration > 0)
+        {
+            thisEnemy.stunDuration -= Time.deltaTime;
             return;
         }
-        else if (thisEnemy.isStun && stunDuration <= 0)
+        else if(isStun && thisEnemy.stunDuration <= 0)
         {
+            isStun = false;
             thisEnemy.isStun = false;
         }
+
+        if(!isSlow && thisEnemy.isSlow)
+        {
+            isSlow = true;
+            moveSpeed *= (1 - thisEnemy.slowPercentage);
+        }
+        if(isSlow && thisEnemy.slowDuration > 0)
+        {
+            thisEnemy.slowDuration -= Time.deltaTime;
+        }
+        else if(isSlow && thisEnemy.slowDuration <= 0)
+        {
+            isSlow = false;
+            thisEnemy.isSlow = false;
+            moveSpeed /= (1 - thisEnemy.slowPercentage);
+        }
+           
+
+
 
 
         if (!thisEnemy.isPushedBack)
         {
-            if (thisEnemy.isSlow && slowDuration > 0)
-            {
-                slowDuration -= Time.deltaTime;
-                return;
-            }
-            else if (thisEnemy.isSlow && slowDuration <= 0)
-            {
-                thisEnemy.isSlow = false;
-                moveSpeed /= slowPercentage;
-            }
-
-
             Vector2 difference = player.position - transform.position;
             float rotationDegreeToPlayer = Mathf.Atan2(difference.x, difference.y) * Mathf.Rad2Deg;
             transform.rotation = Quaternion.Euler(transform.rotation.x, transform.rotation.y, -rotationDegreeToPlayer - transform.rotation.z);
@@ -146,23 +157,5 @@ public class MeleeController : MonoBehaviour {
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(gunPoint.position, attackRange);
-    }
-
-    public void slow(float slowPercentage, float slowDuration)
-    {
-        if (!thisEnemy.isSlow)
-        {
-            moveSpeed *= slowPercentage;
-        }
-        thisEnemy.isSlow = true;
-        this.slowDuration = slowDuration;
-        this.slowPercentage = slowPercentage;
-    }
-
-    public void stun(float stunPercentage, float stunDuration)
-    {
-        thisEnemy.isStun = true;
-        this.stunDuration = stunDuration;
-        this.stunPercentage = stunPercentage;
     }
 }

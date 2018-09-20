@@ -13,9 +13,18 @@ public class EnemyManager : MonoBehaviour {
     public float pushedBackDuration = .7f;
 
 
-    [HideInInspector]
+    [Space]
+    [Header("Slow")]
+    public float slowDuration;
+    public float slowPercentage;
     public bool isSlow = false;
+
+    [Space]
+    [Header("Stun")]
+    public float stunDuration;
     public bool isStun = false;
+
+  
     
 
     private void Start()
@@ -39,5 +48,24 @@ public class EnemyManager : MonoBehaviour {
             currentHealth += hp;
         else
             currentHealth = maxHealth;
+    }
+
+    public void slow(float slowDuration, float slowPercentage)
+    {
+        if(!isSlow)
+        {
+            isSlow = true;
+            this.slowPercentage = slowPercentage;
+        }
+        this.slowDuration = slowDuration;
+        
+    }
+
+    public void stun(float stunDuration)
+    {
+        if (isStun) {
+            this.stunDuration = stunDuration;
+            isStun = true;
+        }
     }
 }

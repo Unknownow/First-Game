@@ -25,15 +25,8 @@ public class RangedController : MonoBehaviour
     public Transform player;
     public Transform[] fuzzle;
 
-    [Space]
-    [Header("Slow")]
-    float slowDuration;
-    float slowPercentage;
-
-    [Space]
-    [Header("Stun")]
-    float stunDuration;
-    float stunPercentage;
+    bool isStun = false;
+    bool isSlow = false;
 
 
     // Use this for initialization
@@ -45,33 +38,46 @@ public class RangedController : MonoBehaviour
         shootCooldown = shootRate;
         pushedBackCountdown = thisEnemy.pushedBackDuration;
         gunnerAnimator = GetComponent<Animator>();
+        isStun = false;
+        isSlow = false;
 
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
-        if(thisEnemy.isStun && stunDuration > 0)
+        if (!isStun && thisEnemy.isStun)
         {
-            stunDuration -= Time.deltaTime;
+            isStun = true;
+        }
+        if (isStun && thisEnemy.stunDuration > 0)
+        {
+            thisEnemy.stunDuration -= Time.deltaTime;
             return;
         }
-        else if(thisEnemy.isStun && stunDuration <= 0)
+        else if (isStun && thisEnemy.stunDuration <= 0)
         {
+            isStun = false;
             thisEnemy.isStun = false;
         }
-        if(!thisEnemy.isPushedBack)
+
+        if (!isSlow && thisEnemy.isSlow)
         {
-            if (thisEnemy.isSlow && slowDuration > 0)
-            {
-                slowDuration -= Time.deltaTime;
-                return;
-            }
-            else if (thisEnemy.isSlow && slowDuration <= 0)
-            {
-                thisEnemy.isSlow = false;
-                moveSpeed /= slowPercentage;
-            }
+            isSlow = true;
+            moveSpeed *= (1 - thisEnemy.slowPercentage);
+        }
+        if (isSlow && thisEnemy.slowDuration > 0)
+        {
+            thisEnemy.slowDuration -= Time.deltaTime;
+        }
+        else if (isSlow && thisEnemy.slowDuration <= 0)
+        {
+            isSlow = false;
+            thisEnemy.isSlow = false;
+            moveSpeed /= (1 - thisEnemy.slowPercentage);
+        }
+        if (!thisEnemy.isPushedBack)
+        {
 
 
             Vector2 difference = player.position - transform.position;
@@ -143,24 +149,6 @@ public class RangedController : MonoBehaviour
         clone.transform.localScale = new Vector3(size, size, size);
         Destroy(clone, .1f);
         return;
-    }
-
-    public void slow(float slowPercentage, float slowDuration)
-    {          
-        if(!thisEnemy.isSlow)
-        {
-            moveSpeed *= slowPercentage;
-        }
-        thisEnemy.isSlow = true;
-        this.slowDuration = slowDuration;
-        this.slowPercentage = slowPercentage;
-    }
-
-    public void stun(float stunPercentage, float stunDuration)
-    {
-        thisEnemy.isStun = true;
-        this.stunDuration = stunDuration;
-        this.stunPercentage = stunPercentage;
     }
 
 }

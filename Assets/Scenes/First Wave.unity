@@ -250,10 +250,6 @@ Prefab:
       propertyPath: m_RootOrder
       value: 4
       objectReference: {fileID: 0}
-    - target: {fileID: 1261084458667150, guid: cba0042a9475de3459bbe10fbf97a956, type: 2}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cba0042a9475de3459bbe10fbf97a956, type: 2}
   m_IsPrefabAsset: 0
@@ -376,16 +372,6 @@ Prefab:
     - target: {fileID: 1764627336808094, guid: 606658c5d1914be4fa057e804e46455c, type: 2}
       propertyPath: m_Name
       value: FlameThrower
-      objectReference: {fileID: 0}
-    - target: {fileID: 212820596053906696, guid: 606658c5d1914be4fa057e804e46455c,
-        type: 2}
-      propertyPath: m_SortingLayerID
-      value: -625014603
-      objectReference: {fileID: 0}
-    - target: {fileID: 212820596053906696, guid: 606658c5d1914be4fa057e804e46455c,
-        type: 2}
-      propertyPath: m_SortingLayer
-      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 606658c5d1914be4fa057e804e46455c, type: 2}

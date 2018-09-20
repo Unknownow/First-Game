@@ -22,15 +22,8 @@ public class BomberController : MonoBehaviour
     public int damage;
 
 
-    [Space]
-    [Header("Slow")]
-    float slowDuration;
-    float slowPercentage;
+    bool isSlow = false;
 
-    [Space]
-    [Header("Stun")]
-    float stunDuration;
-    float stunPercentage;
 
     // Use this for initialization
     void Start()
@@ -38,25 +31,34 @@ public class BomberController : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player").transform;
         thisEnemy = gameObject.GetComponent<EnemyManager>();
         pushedBackCountdown = thisEnemy.pushedBackDuration;
+        isSlow = false;
     }
 
     // Update is called once per frame
     void Update()
     {
+
+        if (!isSlow && thisEnemy.isSlow)
+        {
+            isSlow = true;
+            moveSpeed *= (1 - thisEnemy.slowPercentage);
+        }
+        if (isSlow && thisEnemy.slowDuration > 0)
+        {
+            thisEnemy.slowDuration -= Time.deltaTime;
+        }
+        else if (isSlow && thisEnemy.slowDuration <= 0)
+        {
+            isSlow = false;
+            thisEnemy.isSlow = false;
+            moveSpeed /= (1 - thisEnemy.slowPercentage);
+        }
+
         if (!thisEnemy.isPushedBack)
         {
             if (!isDetonated)
             {
-                if (thisEnemy.isSlow && slowDuration > 0)
-                {
-                    slowDuration -= Time.deltaTime;
-                    return;
-                }
-                else if (thisEnemy.isSlow && slowDuration <= 0)
-                {
-                    thisEnemy.isSlow = false;
-                    moveSpeed /= slowPercentage;
-                }
+                
 
                 Vector2 difference = player.position - transform.position;
                 float rotationDegreeToPlayer = Mathf.Atan2(difference.x, difference.y) * Mathf.Rad2Deg;
@@ -113,21 +115,5 @@ public class BomberController : MonoBehaviour
         Gizmos.color = Color.blue;
         Gizmos.DrawWireSphere(transform.position, detonateRange);
     }
-
-    public void slow(float slowPercentage, float slowDuration)
-    {
-        if (!thisEnemy.isSlow)
-        {
-            moveSpeed *= slowPercentage;
-        }
-        thisEnemy.isSlow = true;
-        this.slowDuration = slowDuration;
-        this.slowPercentage = slowPercentage;
-    }
-
-    public void stun(float stunPercentage, float stunDuration)
-    {
-    }
-
 
 }
