@@ -137,7 +137,7 @@ public class MeleeController : MonoBehaviour {
 
     void flameGun()
     {
-        int i = Random.Range(0, 3);
+        int i = Random.Range(0, 5);
         flameClone(flame[i]);
         return;
     }

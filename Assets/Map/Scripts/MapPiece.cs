@@ -48,5 +48,7 @@ public class MapPiece : MonoBehaviour {
 			transform.root.gameObject.GetComponent<MapDivider> ().MapDestroy (mapQuarter);
 			Destroy (gameObject);
 		}
-    }
+		if (weaponNumber == 0) 
+			currentHealth = maxHealth;
+	}
 }
