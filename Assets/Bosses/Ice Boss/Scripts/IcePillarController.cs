@@ -10,14 +10,21 @@ public class IcePillarController : MonoBehaviour
     public float duration;
     public float delayTime;
     float originalDuration;
-
+    Animator pillarAnimator;
+    bool count = true;
     private void Start()
     {
         originalDuration = duration;
+        pillarAnimator = GetComponent<Animator>();
     }
 
     void FixedUpdate()
     {
+        if(duration < originalDuration - delayTime && count)
+        {
+            count = false;
+            pillarAnimator.SetTrigger("Freeze");
+        }
         if (duration <= 0)
             Destroy(gameObject);
         else
@@ -26,7 +33,7 @@ public class IcePillarController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(duration < originalDuration -delayTime)
+        if(duration < originalDuration - delayTime)
         {
             if (collision.CompareTag("Player"))
             {

@@ -23,6 +23,8 @@ public class WitchController : MonoBehaviour
     float timeBetweenAttack;
     public float startTimeBetweenAttack = .5f;
 
+    Animator witchAnimator;
+
     // Use this for initialization
     void Start()
     {
@@ -33,6 +35,7 @@ public class WitchController : MonoBehaviour
             isMad = false;
         else
             isMad = true;
+        witchAnimator = GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -53,6 +56,7 @@ public class WitchController : MonoBehaviour
             transform.rotation = Quaternion.Euler(transform.rotation.x, transform.rotation.y, -rotationDegreeToPlayer - transform.rotation.z);
             
             transform.position = Vector2.MoveTowards(transform.position, player.position, moveSpeed * Time.deltaTime);
+            witchAnimator.SetTrigger("isRunning");
         }
         else
         {
@@ -60,7 +64,7 @@ public class WitchController : MonoBehaviour
             {
                 transform.Translate(Vector2.up * moveSpeed * 2 * Time.deltaTime);
                 Collider2D hit = Physics2D.OverlapCircle(weapon.position, attackRange, whatIsPlayer);
-                
+                witchAnimator.SetTrigger("isMad");
                 if (hit != null)
                 {
                     isHit = true;
@@ -75,7 +79,8 @@ public class WitchController : MonoBehaviour
             }
             else
             {
-                if(temp > minDistance)
+                witchAnimator.SetTrigger("isSlap");
+                if (temp > minDistance)
                 {
                     Vector2 difference = player.position - transform.position;
                     float rotationDegreeToPlayer = Mathf.Atan2(difference.x, difference.y) * Mathf.Rad2Deg;
