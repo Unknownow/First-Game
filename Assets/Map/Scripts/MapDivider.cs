@@ -5,7 +5,9 @@ using UnityEngine;
 public class MapDivider : MonoBehaviour {
 	public GameObject player;
 	int mapQuarter = 0;
-	int mapPiece = 4;
+	int mapPiece = 5;
+	int nMapFree;
+	int[] mapFree = new int[7];
 
 	int Opposite (int i){
 		if (i == 0)
@@ -14,49 +16,44 @@ public class MapDivider : MonoBehaviour {
 			return 2;
 		if (i == 2)
 			return 1;
-		if (i == 3)
-			return 0;
 		return 0;
 	}
 
-	int SelectPos(int mQ) {
-		for (int i = 0; i < 4; i++)
-			if (i != mQ && transform.GetChild (mapQuarter + i).gameObject.GetComponent<Collider2D> ().isTrigger)
-				return i;
-		return -1;
+	int GetRanMap (){
+		int temp, val;
+		temp = Random.Range (0, nMapFree);
+		val = mapFree [temp];
+		for (int i = temp; i < nMapFree - 1; i++)
+			mapFree [i] = mapFree [i + 1];
+		nMapFree -= 1;
+		return val;
 	}
 
-	void MapSpawn(int mQ, int mP){
-		transform.GetChild(mapQuarter+mQ).gameObject.GetComponent<Collider2D>().isTrigger = true;
-		Instantiate (transform.GetChild (mapPiece+mP), transform.GetChild (mapQuarter+mQ));
+	void MapSpawn(int mQ){
+		int mP = GetRanMap();
+		DestroyImmediate (transform.GetChild (mapQuarter + mQ).GetChild (2).gameObject);
+		Instantiate (transform.GetChild (mapPiece + mP), transform.GetChild (mapQuarter + mQ));
+		transform.GetChild (mapQuarter + mQ).GetChild (2).gameObject.GetComponent<MapPiece> ().mapQuarter = mQ;
+		transform.GetChild (mapQuarter + mQ).GetChild (2).gameObject.SetActive (true);
 
-		if (transform.GetChild (mapQuarter + Opposite (mQ)).gameObject.GetComponent<Collider2D> ().isTrigger) {
-			(transform.GetChild (mapQuarter + mQ)).GetChild (0).gameObject.SetActive (true);
-			(transform.GetChild (mapQuarter + mQ)).GetChild (1).gameObject.SetActive (false);
-			(transform.GetChild (mapQuarter + Opposite (mQ))).GetChild (0).gameObject.SetActive (true);
-			(transform.GetChild (mapQuarter + Opposite (mQ))).GetChild (1).gameObject.SetActive (false);
-		} 
-		else 
+		if (transform.GetChild (mapQuarter + Opposite (mQ)).GetChild (2).gameObject.GetComponent<MapPiece> ().weaponNumber != 0) 
 		{
-			(transform.GetChild (mapQuarter + mQ)).GetChild (0).gameObject.SetActive (false);
-			(transform.GetChild (mapQuarter + mQ)).GetChild (1).gameObject.SetActive (true);
+			transform.GetChild (mapQuarter + mQ).GetChild (0).gameObject.SetActive (true);
+			transform.GetChild (mapQuarter + mQ).GetChild (1).gameObject.SetActive (false);
+			transform.GetChild (mapQuarter + Opposite (mQ)).GetChild (0).gameObject.SetActive (true);
+			transform.GetChild (mapQuarter + Opposite (mQ)).GetChild (1).gameObject.SetActive (false);
 		}
-
-		( transform.GetChild(mapQuarter+mQ) ).GetChild(2).gameObject.GetComponent<MapPiece>().mapQuarter = mQ;
-		( transform.GetChild(mapQuarter+mQ) ).GetChild(2).gameObject.SetActive(true);
-
 	}
 
 	public void MapDestroy(int mQ) {
-		(transform.GetChild (mapQuarter + mQ)).GetChild (0).gameObject.SetActive (false);
-		(transform.GetChild (mapQuarter + mQ)).GetChild (1).gameObject.SetActive (false);
-		if (transform.GetChild (mapQuarter + Opposite (mQ)).gameObject.GetComponent<Collider2D> ().isTrigger) {
-			(transform.GetChild (mapQuarter + Opposite (mQ))).GetChild (0).gameObject.SetActive (false);
-			(transform.GetChild (mapQuarter + Opposite (mQ))).GetChild (1).gameObject.SetActive (true);
-		}
-		transform.GetChild(mapQuarter+mQ).gameObject.GetComponent<Collider2D>().isTrigger = false;
-
-		player.GetComponent<PlayerController> ().tele ( ( transform.GetChild ( SelectPos(mQ) ) ).GetChild (0).position );
+		mapFree [nMapFree] = transform.GetChild (mapQuarter + mQ).GetChild (2).GetComponent<MapPiece> ().weaponNumber - 1;
+		nMapFree += 1;
+		Instantiate (transform.GetChild (4), transform.GetChild (mapQuarter + mQ));
+		transform.GetChild (mapQuarter + mQ).GetChild (3).gameObject.SetActive (true);
+		transform.GetChild (mapQuarter + mQ).GetChild (0).gameObject.SetActive (false);
+		transform.GetChild (mapQuarter + mQ).GetChild (1).gameObject.SetActive (true);
+		transform.GetChild (mapQuarter + Opposite (mQ)).GetChild (0).gameObject.SetActive (false);
+		transform.GetChild (mapQuarter + Opposite (mQ)).GetChild (1).gameObject.SetActive (true);
 	}
 
 	int PlayerInQuarter() {
@@ -74,39 +71,37 @@ public class MapDivider : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		for (int i = 0; i < 4; i++) 
-		{
-			MapSpawn (i, i);
-		}
-
+		nMapFree = 7;
+		for (int i = 0; i < nMapFree; i++) 
+			mapFree [i] = i;
+		for (int i = 0; i < 4; i++)
+			MapSpawn (i);
 		int mQ = PlayerInQuarter ();
-		player.transform.GetChild (player.GetComponent<PlayerController> ().currentWeaponNumber).gameObject.SetActive (false);
-		player.transform.GetChild (transform.GetChild (mapQuarter + mQ).GetChild (2).GetComponent<MapPiece> ().weaponNumber).gameObject.SetActive (true);
 		transform.GetChild (mapQuarter + mQ).GetChild (2).GetComponent<MapPiece> ().isPlayerStanding = true;
 		player.GetComponent<PlayerController> ().currentMapQuarter = mQ;
+		player.transform.GetChild (player.GetComponent<PlayerController> ().currentWeaponNumber).gameObject.SetActive (false);
+		player.transform.GetChild (transform.GetChild (mapQuarter + mQ).GetChild (2).GetComponent<MapPiece> ().weaponNumber).gameObject.SetActive (true);
 		player.GetComponent<PlayerController> ().currentWeaponNumber = transform.GetChild (mapQuarter + mQ).GetChild (2).GetComponent<MapPiece> ().weaponNumber;
-
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		int mQ = PlayerInQuarter ();
-		if (mQ != player.GetComponent<PlayerController> ().currentMapQuarter) 
+		if (transform.GetChild (mapQuarter + mQ).GetChild (2).GetComponent<MapPiece> ().weaponNumber != player.GetComponent<PlayerController> ().currentWeaponNumber)
 		{
 			player.transform.GetChild (player.GetComponent<PlayerController> ().currentWeaponNumber).gameObject.SetActive (false);
-			if (transform.GetChild ( mapQuarter + (player.GetComponent<PlayerController> ().currentMapQuarter) ).gameObject.GetComponent<Collider2D> ().isTrigger)
-				transform.GetChild ( mapQuarter + (player.GetComponent<PlayerController> ().currentMapQuarter) ).GetChild(2).GetComponent<MapPiece> ().isPlayerStanding = false;
 			player.transform.GetChild (transform.GetChild (mapQuarter + mQ).GetChild (2).GetComponent<MapPiece> ().weaponNumber).gameObject.SetActive (true);
+			player.GetComponent<PlayerController> ().currentWeaponNumber = transform.GetChild (mapQuarter + mQ).GetChild (2).GetComponent<MapPiece> ().weaponNumber;
+			transform.GetChild ( mapQuarter + (player.GetComponent<PlayerController> ().currentMapQuarter)).GetChild (2).GetComponent<MapPiece> ().isPlayerStanding = false;
 			transform.GetChild (mapQuarter + mQ).GetChild (2).GetComponent<MapPiece> ().isPlayerStanding = true;
 			player.GetComponent<PlayerController> ().currentMapQuarter = mQ;
-			player.GetComponent<PlayerController> ().currentWeaponNumber = transform.GetChild (mapQuarter + mQ).GetChild (2).GetComponent<MapPiece> ().weaponNumber;
 		}
 		if (Input.GetButtonDown("Fire2"))
 			{
 				for (int i = 0; i < 4; i++)
-					if (!transform.GetChild (mapQuarter + i).gameObject.GetComponent<Collider2D> ().isTrigger)
+				if (transform.GetChild (mapQuarter + i).GetChild (2).gameObject.GetComponent<MapPiece> ().weaponNumber == 0)
 					{
-						MapSpawn (i, i);
+						MapSpawn (i);
 						break;
 					}
 			}
