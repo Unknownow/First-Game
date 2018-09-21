@@ -21,7 +21,8 @@ GameObject:
   - component: {fileID: 4396051343091408}
   - component: {fileID: 212890699006384432}
   - component: {fileID: 50135273538977544}
-  - component: {fileID: 61856764769758278}
+  - component: {fileID: 95142111443242870}
+  - component: {fileID: 60550808729060882}
   - component: {fileID: 114694377905940624}
   - component: {fileID: 114856619397530578}
   m_Layer: 11
@@ -39,6 +40,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4266252950716098}
+  - component: {fileID: 114296559183522698}
   m_Layer: 11
   m_Name: Weapon
   m_TagString: Boss
@@ -52,8 +54,8 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1861406000518774}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 3.23, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4396051343091408}
@@ -66,8 +68,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1462576237557912}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.72, y: 0.16, z: 0}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 1}
+  m_LocalPosition: {x: -1.24, y: 1.66, z: 0}
+  m_LocalScale: {x: 6, y: 6, z: 1}
   m_Children:
   - {fileID: 4266252950716098}
   m_Father: {fileID: 0}
@@ -93,8 +95,8 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!61 &61856764769758278
-BoxCollider2D:
+--- !u!60 &60550808729060882
+PolygonCollider2D:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
@@ -109,15 +111,66 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 5.12, y: 5.12}
+    oldSize: {x: 0.95, y: 0.48}
     newSize: {x: 5.12, y: 5.12}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 5.12, y: 5.12}
-  m_EdgeRadius: 0
+  m_Points:
+    m_Paths:
+    - - {x: 0.415, y: -0.099999994}
+      - {x: 0.475, y: -0.02}
+      - {x: 0.475, y: 0.16}
+      - {x: 0.445, y: 0.21}
+      - {x: 0.24499999, y: 0.22999999}
+      - {x: 0.114999995, y: 0.16}
+      - {x: 0.055, y: 0.24}
+      - {x: -0.044999998, y: 0.24}
+      - {x: -0.16499999, y: 0.17999999}
+      - {x: -0.24499999, y: 0.22999999}
+      - {x: -0.355, y: 0.22}
+      - {x: -0.445, y: 0.19999999}
+      - {x: -0.475, y: 0.17}
+      - {x: -0.475, y: -0.01}
+      - {x: -0.415, y: -0.11}
+      - {x: -0.235, y: -0.17}
+      - {x: -0.16499999, y: -0.22}
+      - {x: -0.035, y: -0.22}
+      - {x: 0.035, y: -0.21}
+      - {x: 0.085, y: -0.22}
+      - {x: 0.155, y: -0.22}
+      - {x: 0.235, y: -0.14999999}
+      - {x: 0.345, y: -0.089999996}
+--- !u!95 &95142111443242870
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1462576237557912}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 0dab2318789ca334da51c083dfd40c28, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &114296559183522698
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1861406000518774}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b1f090d01ff6dc46a7d8f5001e3a812, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114694377905940624
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -142,7 +195,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef5dae1d4ac27904fb8159001e046c67, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bossRadius: 1.98
+  bossRadius: 2.9
   whatToStop:
     serializedVersion: 2
     m_Bits: 1280
@@ -154,12 +207,14 @@ MonoBehaviour:
   safeTeleportDistance: 5
   iceBossProjectile: {fileID: 1526571151285724, guid: f942cbaef6fb4b448a07011034b14319,
     type: 2}
-  fireRate: 1
+  iceBossProjectile2: {fileID: 1354032985424576, guid: 7f938301c250314429ddad07f8ad6736,
+    type: 2}
+  fireRate: 0.2
   enterStateRate: 3
   standStillTime: 5
   summonRate: 0.5
   icePillar: {fileID: 1365276842609726, guid: 0a3e0eccf9d5ea34997c594775f5d011, type: 2}
-  turretFireRate: 0.12
+  turretFireRate: 0.08
   spreadRate: 0
 --- !u!212 &212890699006384432
 SpriteRenderer:
@@ -193,10 +248,10 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -625014603
+  m_SortingLayer: 4
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: e44ad7f6abf447a4e81977b85074e7a5, type: 3}
+  m_Sprite: {fileID: 21300018, guid: 17e5f844719fd0d488203df44b717fef, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
