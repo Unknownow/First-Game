@@ -23,7 +23,6 @@ public class BomberController : MonoBehaviour
 
 
     bool isSlow = false;
-    Animator bomberAnimator;
 
 
     // Use this for initialization
@@ -33,7 +32,6 @@ public class BomberController : MonoBehaviour
         thisEnemy = gameObject.GetComponent<EnemyManager>();
         pushedBackCountdown = thisEnemy.pushedBackDuration;
         isSlow = false;
-        bomberAnimator = GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -65,18 +63,15 @@ public class BomberController : MonoBehaviour
                 Vector2 difference = player.position - transform.position;
                 float rotationDegreeToPlayer = Mathf.Atan2(difference.x, difference.y) * Mathf.Rad2Deg;
                 transform.rotation = Quaternion.Euler(transform.rotation.x, transform.rotation.y, -rotationDegreeToPlayer - transform.rotation.z);
-                
+
 
                 float temp = Vector2.Distance(player.position, transform.position);
-                bomberAnimator.SetBool("isRunning", false);
                 if (temp > detonateRange)
                 {
-                    bomberAnimator.SetBool("isRunning", true);
                     transform.position = Vector2.MoveTowards(transform.position, player.position, moveSpeed * Time.deltaTime);
                 }
                 else if (temp <= detonateRange)
                 {
-                    bomberAnimator.SetBool("isTriggered", true);
                     isDetonated = true;
                 }
             }
@@ -84,10 +79,7 @@ public class BomberController : MonoBehaviour
             else
             {
                 if (bombTime <= 0)
-                {
                     detonate(damage);
-                }
-                    
                 else
                     bombTime -= Time.deltaTime;
             }
@@ -112,9 +104,8 @@ public class BomberController : MonoBehaviour
     void detonate(float damage)
     {
         Collider2D playerHit = Physics2D.OverlapCircle(transform.position, damageRange, whatIsPlayer);
-        if(playerHit != null) playerHit.GetComponent<PlayerManager>().takeDamage(damage);
-        bomberAnimator.SetTrigger("isExploded");
-        Destroy(gameObject,.2f);
+        playerHit.GetComponent<PlayerManager>().takeDamage(damage);
+		transform.GetComponent<EnemyManager> ().takeDamage (transform.GetComponent<EnemyManager> ().maxHealth);
     }
 
     private void OnDrawGizmosSelected()

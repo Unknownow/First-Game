@@ -183,6 +183,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 4
+  mobNo: 4
+  boundary: {fileID: 0}
   isPushedBack: 0
   pushedBackDuration: 0.7
   slowDuration: 0
@@ -339,8 +341,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 1841202357
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300036, guid: 79c8386e903033844b97118591bf885d, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

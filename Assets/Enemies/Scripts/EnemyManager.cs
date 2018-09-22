@@ -6,6 +6,8 @@ public class EnemyManager : MonoBehaviour {
 
     public float maxHealth = 3f;
     float currentHealth;
+	public int mobNo;
+	public GameObject boundary;
 
     [Space]
     [Header("Push Back")]
@@ -38,6 +40,7 @@ public class EnemyManager : MonoBehaviour {
         currentHealth -= damage;
         if(currentHealth <= 0)
         {
+			boundary.GetComponent<MapManager> ().mobDeath (mobNo);
             Destroy(gameObject);
         }
     }
