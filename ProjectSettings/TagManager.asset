@@ -15,6 +15,7 @@ TagManager:
   - Lower Right
   - Map Piece
   - Portal
+  - healthBar
   layers:
   - Default
   - TransparentFX
