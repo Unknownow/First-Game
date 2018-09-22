@@ -196,8 +196,8 @@ EdgeCollider2D:
   m_Offset: {x: 0, y: 0}
   m_EdgeRadius: 0
   m_Points:
-  - {x: 9, y: 5}
-  - {x: -9, y: 5}
+  - {x: 18, y: 9}
+  - {x: -18, y: 9}
 --- !u!68 &68234223539861694
 EdgeCollider2D:
   m_ObjectHideFlags: 1
@@ -213,8 +213,8 @@ EdgeCollider2D:
   m_Offset: {x: 0, y: 0}
   m_EdgeRadius: 0
   m_Points:
-  - {x: 9, y: 5}
-  - {x: 9, y: -5}
+  - {x: 18, y: 10}
+  - {x: 18, y: -10}
 --- !u!68 &68410746283042800
 EdgeCollider2D:
   m_ObjectHideFlags: 1
@@ -230,8 +230,8 @@ EdgeCollider2D:
   m_Offset: {x: 0, y: 0}
   m_EdgeRadius: 0
   m_Points:
-  - {x: -9, y: -5}
-  - {x: -9, y: 5}
+  - {x: -18, y: -10}
+  - {x: -18, y: 10}
 --- !u!68 &68755356178583970
 EdgeCollider2D:
   m_ObjectHideFlags: 1
@@ -247,8 +247,8 @@ EdgeCollider2D:
   m_Offset: {x: 0, y: 0}
   m_EdgeRadius: 0
   m_Points:
-  - {x: 9, y: -5}
-  - {x: -9, y: -5}
+  - {x: 18, y: -9}
+  - {x: -18, y: -9}
 --- !u!114 &114211241603333052
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -271,5 +271,7 @@ MonoBehaviour:
   - {fileID: 1993994757370432, guid: 99180885824cb1444b30e8bbce2b940b, type: 2}
   - {fileID: 1363041716153874, guid: 9c6662f1ac2a52d4a89d89dd7ec91f6b, type: 2}
   numberOfMobAvail: 0300000003000000020000000100000001000000
+  mobQueue: []
+  mobQueueMax: 1
   mobCounterMax: 1
   spawnRate: 1

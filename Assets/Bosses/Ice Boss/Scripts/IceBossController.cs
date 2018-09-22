@@ -73,6 +73,7 @@ public class IceBossController : MonoBehaviour {
 
         fireCooldown = turretFireRate;
         iceBossAnimator = GetComponent<Animator>();
+        
     }
 	
 	// Update is called once per frame
@@ -80,7 +81,7 @@ public class IceBossController : MonoBehaviour {
         transform.rotation = Quaternion.Euler(0, 0, 0);
         if (!isPhase2)
         {
-            phase1();
+            phase2();
         }
         else
         {
