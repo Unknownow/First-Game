@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerManager : MonoBehaviour {
 
@@ -9,17 +10,21 @@ public class PlayerManager : MonoBehaviour {
 
     public float invulTime;
     float invulCooldown;
+    public Slider healthBar;
 
     private void Start()
     {
         isInvul = false;
         invulCooldown = invulTime;
+        healthBar.gameObject.SetActive(true);
     }
 
     // Update is called once per frame
     void FixedUpdate () {
-		if(health <= 0)
+        healthBar.value = health;
+        if (health <= 0)
         {
+            healthBar.gameObject.SetActive(false);
             Destroy(gameObject);
         }
         else if(isInvul)

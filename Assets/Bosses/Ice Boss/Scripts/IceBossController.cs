@@ -12,6 +12,7 @@ public class IceBossController : MonoBehaviour {
     public float bossRadius;
     public LayerMask whatToStop;
     public GameObject mainCamera;
+    Animator iceBossAnimator;
 
     [Space]
     [Header("Moving")]
@@ -31,6 +32,7 @@ public class IceBossController : MonoBehaviour {
     [Space]
     [Header("Shooting")]
     public GameObject iceBossProjectile;
+    public GameObject iceBossProjectile2;
     public float fireRate;
     float fireRateCooldown;
 
@@ -52,7 +54,8 @@ public class IceBossController : MonoBehaviour {
     public float turretFireRate;
     float fireCooldown;
     public float spreadRate = 0;
-   
+    int turretPatern;
+
     // Use this for initialization
     void Start () {
         isMoving = false;
@@ -69,13 +72,16 @@ public class IceBossController : MonoBehaviour {
         stateCountdown = enterStateRate;
 
         fireCooldown = turretFireRate;
+        iceBossAnimator = GetComponent<Animator>();
+        
     }
 	
 	// Update is called once per frame
 	void FixedUpdate () {
+        transform.rotation = Quaternion.Euler(0, 0, 0);
         if (!isPhase2)
         {
-            phase1();
+            phase2();
         }
         else
         {
@@ -99,11 +105,9 @@ public class IceBossController : MonoBehaviour {
             movingRate /= 2f;
             fireRate /= 2f;
         }
-
         if(!isStandingStill)
         {
             // Moving 
-            lookAtObject(player.position);
             if (isMoving)
             {
                 moving();
@@ -143,7 +147,6 @@ public class IceBossController : MonoBehaviour {
             }
             else
             {
-                lookAtObject(player.position);
                 shot(0, bossWeapon.transform.position);
                 fireRateCooldown = fireRate;
             }
@@ -157,11 +160,22 @@ public class IceBossController : MonoBehaviour {
         }
         else
         {
+            
             if (!isStandingStill)
             {
                 isStandingStill = true;
                 transform.position = new Vector2(mainCamera.transform.position.x, mainCamera.transform.position.y);
-                transform.rotation = Quaternion.identity;
+                //transform.rotation = Quaternion.identity;
+                fireRate /= 2;
+            }
+            if (fireRateCooldown > 0)
+            {
+                fireRateCooldown -= Time.deltaTime;
+            }
+            else
+            {
+                shot(0, bossWeapon.transform.position);
+                fireRateCooldown = fireRate;
             }
             if (standStillCooldown > 0 && isStandingStill)
             {
@@ -186,6 +200,7 @@ public class IceBossController : MonoBehaviour {
                 stateCountdown = Random.Range(enterStateRate - 2, enterStateRate + 2);
                 standStillCooldown = standStillTime;
                 isStandingStill = false;
+                fireRate *= 2;
             }
         }
 
@@ -198,7 +213,6 @@ public class IceBossController : MonoBehaviour {
         if (!isStandingStill)
         {
             // Moving 
-            lookAtObject(player.position);
             if (isMoving)
             {
                 moving();
@@ -238,7 +252,6 @@ public class IceBossController : MonoBehaviour {
             }
             else
             {
-                lookAtObject(player.position);
                 shot(0, bossWeapon.transform.position);
                 fireRateCooldown = fireRate;
             }
@@ -257,9 +270,12 @@ public class IceBossController : MonoBehaviour {
                 isStandingStill = true;
                 transform.position = new Vector2(mainCamera.transform.position.x, mainCamera.transform.position.y);
                 transform.rotation = Quaternion.identity;
+                turretPatern = Random.Range(0, 3);
+
             }
             if (standStillCooldown > 0 && isStandingStill)
             {
+                
                 if (summonCooldown > 0)
                 {
                     summonCooldown -= Time.deltaTime;
@@ -276,23 +292,92 @@ public class IceBossController : MonoBehaviour {
                 }
                 standStillCooldown -= Time.deltaTime;
 
-                if (fireCooldown > 0)
+                if(turretPatern == 0)
                 {
-                    fireCooldown -= Time.deltaTime;
+                    if (fireCooldown > 0)
+                    {
+                        fireCooldown -= Time.deltaTime;
+                    }
+                    else
+                    {
+                        shot2(0 + spreadRate, transform.position);
+                        shot2(90 + spreadRate, transform.position);
+                        shot2(180 + spreadRate, transform.position);
+                        shot2(270 + spreadRate, transform.position);
+                        shot2(45 + spreadRate, transform.position);
+                        shot2(135 + spreadRate, transform.position);
+                        shot2(225 + spreadRate, transform.position);
+                        shot2(315 + spreadRate, transform.position);
+                        spreadRate += 5;
+                        fireCooldown = turretFireRate;
+                    }
                 }
-                else
+                else if (turretPatern == 1)
                 {
-                    shot(0 + spreadRate, transform.position);
-                    shot(90 + spreadRate, transform.position);
-                    shot(180 + spreadRate, transform.position);
-                    shot(270 + spreadRate, transform.position);
-                    shot(45 + spreadRate, transform.position);
-                    shot(135 + spreadRate, transform.position);
-                    shot(225 + spreadRate, transform.position);
-                    shot(315 + spreadRate, transform.position);
-                    spreadRate += 5;
-                    fireCooldown = turretFireRate;
+                    if (fireCooldown > 0)
+                    {
+                        fireCooldown -= Time.deltaTime;
+                    }
+                    else
+                    {
+                        shot2(0 + spreadRate, transform.position);
+                        shot2(90 + spreadRate, transform.position);
+                        shot2(180 + spreadRate, transform.position);
+                        shot2(270 + spreadRate, transform.position);
+                        shot2(45 + spreadRate, transform.position);
+                        shot2(135 + spreadRate, transform.position);
+                        shot2(225 + spreadRate, transform.position);
+                        shot2(315 + spreadRate, transform.position);
+                        spreadRate -= 5;
+                        fireCooldown = turretFireRate;
+                    }
                 }
+                else if(turretPatern == 2)
+                {
+                    if (fireCooldown > 0)
+                    {
+                        fireCooldown -= Time.deltaTime;
+                    }
+                    else
+                    {
+                        int temp = Random.Range(0, 3);
+                        if(temp == 0)
+                        {
+                            shot2(0, transform.position);
+                            shot2(90, transform.position);
+                            shot2(180, transform.position);
+                            shot2(270, transform.position);
+                            shot2(45, transform.position);
+                            shot2(135, transform.position);
+                            shot2(225, transform.position);
+                            shot2(315, transform.position);
+                        }
+                        else if (temp == 1)
+                        {
+                            shot2(0+15, transform.position);
+                            shot2(90 + 15, transform.position);
+                            shot2(180 + 15, transform.position);
+                            shot2(270 + 15, transform.position);
+                            shot2(45 + 15, transform.position);
+                            shot2(135 + 15, transform.position);
+                            shot2(225 + 15, transform.position);
+                            shot2(315 + 15, transform.position);
+                        }
+                        else if (temp == 2)
+                        {
+                            shot2(0 + 30, transform.position);
+                            shot2(90 + 30, transform.position);
+                            shot2(180 + 30, transform.position);
+                            shot2(270 + 30, transform.position);
+                            shot2(45 + 30, transform.position);
+                            shot2(135 + 30, transform.position);
+                            shot2(225 + 30, transform.position);
+                            shot2(315 + 30, transform.position);
+                        }
+                        fireCooldown = turretFireRate;
+                    }
+                }
+
 
             }
             else
@@ -319,7 +404,6 @@ public class IceBossController : MonoBehaviour {
 
     void moving()
     {
-        lookAtObject(player.position);
         transform.position = Vector2.MoveTowards(transform.position, movePosition, moveSpeed * Time.deltaTime);
         Collider2D collider = Physics2D.OverlapCircle(transform.position, bossRadius, whatToStop);
         if (collider != null || transform.position == movePosition)
@@ -332,10 +416,18 @@ public class IceBossController : MonoBehaviour {
 
     void shot(float angle, Vector3 location)
     {
-        Vector3 bullet = Quaternion.ToEulerAngles(transform.rotation);
+        Vector3 bullet = Quaternion.ToEulerAngles(bossWeapon.rotation);
         bullet.z += angle * Mathf.PI / 180;
         Quaternion temp = Quaternion.EulerAngles(bullet);
         Instantiate(iceBossProjectile, location, temp);
+    }
+
+    void shot2(float angle, Vector3 location)
+    {
+        Vector3 bullet = Quaternion.ToEulerAngles(transform.rotation);
+        bullet.z += angle * Mathf.PI / 180;
+        Quaternion temp = Quaternion.EulerAngles(bullet);
+        Instantiate(iceBossProjectile2, location, temp);
     }
 
     private void OnDrawGizmosSelected()

@@ -104,7 +104,9 @@ public class BomberController : MonoBehaviour
     void detonate(float damage)
     {
         Collider2D playerHit = Physics2D.OverlapCircle(transform.position, damageRange, whatIsPlayer);
-        playerHit.GetComponent<PlayerManager>().takeDamage(damage);
+        if (playerHit != null)
+            playerHit.GetComponent<PlayerManager>().takeDamage(damage);
+        gameObject.GetComponent<EnemyManager>().takeDamage(gameObject.GetComponent<EnemyManager>().maxHealth);
         Destroy(gameObject);
     }
 

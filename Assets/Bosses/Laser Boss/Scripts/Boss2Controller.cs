@@ -61,6 +61,10 @@ public class Boss2Controller : MonoBehaviour
         if (teleportCooldown <= 0)
         {
             Vector2 telePos = Camera.main.ScreenToWorldPoint(new Vector2(Random.Range(0, Screen.width), Random.Range(0, Screen.height)));
+            if (telePos.y >= 0)
+                telePos.y -= 1.5f;
+            else
+                telePos.y += 1.5f;
             float temp = Vector2.Distance(player.position, telePos);
             if (temp >= safeTeleportDistance)
             {
@@ -93,6 +97,10 @@ public class Boss2Controller : MonoBehaviour
         if (teleportCooldown <= 0 && !isFreeze)
         {
             Vector2 telePos = Camera.main.ScreenToWorldPoint(new Vector2(Random.Range(0, Screen.width), Random.Range(0, Screen.height)));
+            if (telePos.y >= 0)
+                telePos.y -= 1.5f;
+            else
+                telePos.y += 1.5f;
             float temp = Vector2.Distance(player.position, telePos);
             if (temp >= safeTeleportDistance)
             {
@@ -129,7 +137,7 @@ public class Boss2Controller : MonoBehaviour
                     laserSnipe.GetComponent<Renderer>().enabled = true;
                     freezeCooldown -= Time.deltaTime;
                 }
-                    
+
             }
             else
             {
