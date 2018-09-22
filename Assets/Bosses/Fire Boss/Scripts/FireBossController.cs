@@ -13,6 +13,7 @@ public class FireBossController : MonoBehaviour {
     public LayerMask whatToStop;
     public LayerMask whatIsPlayer;
     bool isPhase2 = false;
+    Animator fireBossAnimator;
 
     [Space]
     [Header("Dashing")]
@@ -44,10 +45,11 @@ public class FireBossController : MonoBehaviour {
     [Header("Flame Circle")]
     public float flameRadius;
     public float duration;
-    float durationCountdown;
+    public float durationCountdown;
     public float flameDamage;
     public float circleRate;
-    float circleCountdown;
+    public float circleCountdown;
+    bool isActive = false;
     
     [Space]
     [Header("Flame Bomb")]
@@ -71,6 +73,8 @@ public class FireBossController : MonoBehaviour {
         bossWeapon = transform.GetChild(0).transform;
         chargingCountdown = chargingTime;
         durationCountdown = duration;
+        circleCountdown = circleRate;
+        fireBossAnimator = GetComponent<Animator>();
     }
 	
 	// Update is called once per frame
@@ -80,11 +84,11 @@ public class FireBossController : MonoBehaviour {
 
         if(!isPhase2)
         {
-            phase2();
+            phase1();
         }
         else
         {
-            phase1();
+            phase2();
         }
     }
 
@@ -93,11 +97,12 @@ public class FireBossController : MonoBehaviour {
         // check boss phase 2
         if (bossManager.checkPhase2() && !isPhase2)
         {
+            fireBossAnimator.SetTrigger("SecondPhase");
             isPhase2 = true;
             fireRate *= 2;
-            dashSpeed *= 2;
             moveSpeed *= 2;
             spreadRate *= 2;
+            bossRadius *= 2;
             return;
         }
 
@@ -167,24 +172,31 @@ public class FireBossController : MonoBehaviour {
 
 
         //Flame circle
-        if(circleCountdown > 0)
+        if (circleCountdown > 0)
         {
             circleCountdown -= Time.deltaTime;
         }
         else
         {
-            if(durationCountdown > 0)
+            if (!isActive)
+            {
+                transform.GetChild(1).gameObject.SetActive(true);
+            }
+            if (durationCountdown > 0)
             {
                 Collider2D playerHit = Physics2D.OverlapCircle(transform.position, flameRadius, whatIsPlayer);
                 if (playerHit != null)
                 {
                     playerHit.GetComponent<PlayerManager>().takeDamage(flameDamage);
                 }
+                durationCountdown -= Time.deltaTime;
             }
             else
             {
                 durationCountdown = duration;
                 circleCountdown = circleRate;
+                transform.GetChild(1).gameObject.SetActive(false);
+                isActive = false;
             }
         }
     }
@@ -282,6 +294,10 @@ public class FireBossController : MonoBehaviour {
         }
         else
         {
+            if(!isActive)
+            {
+                transform.GetChild(1).gameObject.SetActive(true);
+            }
             if (durationCountdown > 0)
             {
                 Collider2D playerHit = Physics2D.OverlapCircle(transform.position, flameRadius, whatIsPlayer);
@@ -289,11 +305,14 @@ public class FireBossController : MonoBehaviour {
                 {
                     playerHit.GetComponent<PlayerManager>().takeDamage(flameDamage);
                 }
+                durationCountdown -= Time.deltaTime;
             }
             else
             {
                 durationCountdown = duration;
                 circleCountdown = circleRate;
+                transform.GetChild(1).gameObject.SetActive(false);
+                isActive = false;
             }
         }
 
@@ -326,7 +345,6 @@ public class FireBossController : MonoBehaviour {
 
     void dashing()
     {
-        lookAtObject(player.position);
         transform.Translate(Vector2.up * dashSpeed * Time.deltaTime);
         Collider2D collider = Physics2D.OverlapCircle(transform.position, bossRadius, whatToStop);
         if (collider != null)

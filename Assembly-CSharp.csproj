@@ -80,6 +80,7 @@
     <Compile Include="Assets\Enemies\Scripts\EnemyManager.cs" />
     <Compile Include="Assets\Enemies\Witch\Scripts\WitchController.cs" />
     <Compile Include="Assets\Map\Scripts\MapDivider.cs" />
+    <Compile Include="Assets\Map\Scripts\MapManager.cs" />
     <Compile Include="Assets\Map\Scripts\MapPiece.cs" />
     <Compile Include="Assets\Map\Scripts\Portal.cs" />
     <Compile Include="Assets\Player\Scripts\PlayerController.cs" />

@@ -29,7 +29,7 @@ public class MapDivider : MonoBehaviour {
 		return val;
 	}
 
-	void MapSpawn(int mQ){
+	public void MapSpawn(int mQ){
 		int mP = GetRanMap();
 		DestroyImmediate (transform.GetChild (mapQuarter + mQ).GetChild (2).gameObject);
 		Instantiate (transform.GetChild (mapPiece + mP), transform.GetChild (mapQuarter + mQ));

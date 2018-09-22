@@ -23,7 +23,7 @@ public class BossManager : MonoBehaviour {
     }
     public bool checkPhase2()
     {
-        if(currentHp <= maxHp / 3)
+        if(currentHp <= maxHp / 2 )
         {
             return true;
         }

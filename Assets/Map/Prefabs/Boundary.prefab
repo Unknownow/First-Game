@@ -36,6 +36,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4276047699422466}
   - component: {fileID: 50654729981939640}
+  - component: {fileID: 114211241603333052}
   m_Layer: 10
   m_Name: Boundary
   m_TagString: Border
@@ -248,3 +249,27 @@ EdgeCollider2D:
   m_Points:
   - {x: 9, y: -5}
   - {x: -9, y: -5}
+--- !u!114 &114211241603333052
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1405883009161852}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9bc558ef134c98040a32eecb7e17729e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  boss:
+  - {fileID: 1171945901154258, guid: 6c21558c9cb0b0d448850913e66b884c, type: 2}
+  - {fileID: 1462576237557912, guid: 126a2580a15ad104ab7db2a347fdfc06, type: 2}
+  - {fileID: 1479624951231182, guid: 072fcd9b98e342e40a6074c94e73a9d1, type: 2}
+  mob:
+  - {fileID: 1764627336808094, guid: 606658c5d1914be4fa057e804e46455c, type: 2}
+  - {fileID: 1261084458667150, guid: cba0042a9475de3459bbe10fbf97a956, type: 2}
+  - {fileID: 1725734166610170, guid: 0df1eb779af2ee3498eab9ea67e6ad77, type: 2}
+  - {fileID: 1993994757370432, guid: 99180885824cb1444b30e8bbce2b940b, type: 2}
+  - {fileID: 1363041716153874, guid: 9c6662f1ac2a52d4a89d89dd7ec91f6b, type: 2}
+  numberOfMobAvail: 0300000003000000020000000100000001000000
+  mobCounterMax: 1
+  spawnRate: 1
